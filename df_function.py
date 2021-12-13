@@ -9,10 +9,27 @@ Created on Thu Dec  2 16:25:23 2021
 import pandas as pd
 from datetime import datetime,timedelta
 
-def CleanDataframe(database_taxi, year):
-    data_min= datetime.strptime(str(year), '%Y')
-    database_taxi['tpep_pickup_datetime']= pd.to_datetime(database_taxi['tpep_pickup_datetime'])
-    database_taxi=  database_taxi[database_taxi.tpep_pickup_datetime > data_min]
+def CleanDataframe(database_taxi,year,month):
+    """
+    sottoprogramma che in base all'anno e al mese che vengono inseriti in input
+    (quelli del file) elimina eventuali dati che non sono di tale periodo.
+    N.B. Tengo conto della data in cui il passeggero è salito nel taxi
+    """
+    database_taxi['tpep_pickup_datetime'] = pd.to_datetime(database_taxi['tpep_pickup_datetime'])
+    database_taxi['year'] = database_taxi['tpep_pickup_datetime'].dt.year  
+    database_taxi['month'] = database_taxi['tpep_pickup_datetime'].dt.month                             
+    database_taxi = database_taxi[database_taxi['year'] == datetime.strptime(str(year), '%Y').year] 
+    database_taxi = database_taxi[database_taxi['month'] == datetime.strptime(str(month), '%m').month]
+    del database_taxi['year']
+    del database_taxi['month']
+                       
+    return database_taxi
+
+def zero_passenger(database_taxi):
+    """
+    sottoprogramma che elimina eventuali dati con 0 passeggeri
+    """
+    database_taxi = database_taxi[database_taxi['passenger_count'] > 0]
     return database_taxi
 
    # Utile.writeJsonFile(features_df)
