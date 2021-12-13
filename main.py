@@ -5,8 +5,6 @@ Created on Wed Nov 24 10:20:53 2021
 
 @author: giuliano
 """
-from datetime import datetime,timedelta
-import pandas as pd 
 import Utils
 from df_function import CleanDataframe,timeSlots,separateBorough
 from time import perf_counter
@@ -20,9 +18,6 @@ Input: anno, mese*, borough*
 Output: file, grafico
 """
 
-
-
-
 if __name__ == '__main__':
     
     args = Utils.initializeParser()
@@ -34,8 +29,8 @@ if __name__ == '__main__':
     
     data_taxi = Utils.readCsv(fileName)
     
-    data_taxi= CleanDataframe(data_taxi, year)
-    
+    data_taxi= CleanDataframe(data_taxi, year,month)
+    data_taxi = zero_passenger(data_taxi)
     
     borough_Manhattan = separateBorough(data_taxi,'Manhattan')
     borough_Queens = separateBorough(data_taxi,'Queens')
@@ -50,11 +45,3 @@ if __name__ == '__main__':
     
     print('Tempo di esecuzione: ' + str(dt) + ' s')
     print('Fine')
-        
-    
-    
-    
-
-    
-    print('Fine')
-
