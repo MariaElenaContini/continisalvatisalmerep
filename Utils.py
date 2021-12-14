@@ -6,7 +6,6 @@ Created on Thu Dec  2 11:00:32 2021
 @author: giuliano
 """
 
-
 import argparse
 import pandas as pd
 import json
@@ -20,7 +19,9 @@ def initializeParser():
     parser.add_argument("-m", "--month",
                         help="The year of which you wants to obtain the analysis. Month must be expressed as number "
                              "or in english.",
-                        type=str)
+                        type=str,
+                        default='02'
+                        )
     parser.add_argument("-b", "--borough",
                         help="The zone of which you wants to obtain the analysis",
                         type=str,
